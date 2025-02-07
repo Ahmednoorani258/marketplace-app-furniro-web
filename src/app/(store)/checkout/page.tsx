@@ -65,6 +65,18 @@ export default function CheckOut() {
       paymentMethod: data.paymentMethod,
     };
 
+    try {
+      const res = await fetch("/api/savecustomer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderPayload),
+      });
+
+      const result = await res.json();
+    } catch (error) {
+      console.error("Error sending order to sanity", error);
+    }
+
     if(orderPayload.addCart.length === 0){
       alert("Cart is empty");
       setTimeout(() => {

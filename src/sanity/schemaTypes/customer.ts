@@ -13,12 +13,11 @@ export const customer = defineType({
     defineField({ name: "zipCode", type: "string", title: "ZIP Code", validation: (Rule) => Rule.required() }),
     defineField({ name: "companyName", type: "string", title: "Company Name", description: "Optional - Add a company name if applicable." }),
     defineField({ name: "country", type: "string", title: "Country", validation: (Rule) => Rule.required() }),
-    defineField({ name: "province", type: "string", title: "Province/State", validation: (Rule) => Rule.required() }),
-    defineField({ 
-      name: "orders", 
-      title: "Orders", 
-      type: "array", 
-      of: [{ type: "reference", to: [{ type: "order" }] }] 
+    defineField({
+      name: "orders",
+      title: "Orders",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "order" }] }], // Keep it simple, Sanity will handle _key
     }),
   ],
 });
