@@ -73,11 +73,11 @@ export async function POST(req: NextRequest) {
         return true;
       })
       .map((item: any) => ({
-        _key: nanoid() ,
+        _key: nanoid(),
         product: { _type: "reference", _ref: item.id },
         quantity: item.quantity,
       }));
-      
+
     if (products.length === 0) {
       return NextResponse.json(
         { error: "No valid products found in order." },
@@ -104,7 +104,9 @@ export async function POST(req: NextRequest) {
     await client
       .patch(customer._id)
       .setIfMissing({ orders: [] })
-      .append("orders", [{ _type: "reference", _ref: createdOrder._id }])
+      .append("orders", [
+        { _key: nanoid(), _type: "reference", _ref: createdOrder._id },
+      ])
       .commit();
 
     return NextResponse.json(

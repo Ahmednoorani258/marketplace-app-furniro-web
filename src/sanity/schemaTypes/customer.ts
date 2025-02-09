@@ -20,4 +20,18 @@ export const customer = defineType({
       of: [{ type: "reference", to: [{ type: "order" }] }], // Keep it simple, Sanity will handle _key
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "email",
+      phone: "phoneNumber",
+    },
+    prepare(selection) {
+      const { title, subtitle, phone } = selection;
+      return {
+        title: title || "No Name",
+        subtitle: subtitle ? `${subtitle} | ${phone}` : "No Email",
+      };
+    },
+  },
 });

@@ -17,6 +17,19 @@ export const order = defineType({
             defineField({ name: "product", type: "reference", title: "Product", to: [{ type: "product" }], validation: (Rule) => Rule.required() }),
             defineField({ name: "quantity", type: "number", title: "Quantity", validation: (Rule) => Rule.required().min(1) }),
           ],
+          preview: {
+            select: {
+              title: "product.name",
+              quantity: "quantity",
+            },
+            prepare(selection) {
+              const { title, quantity } = selection;
+              return {
+                title: title || "Unknown Product",
+                subtitle: `Quantity: ${quantity || 0}`,
+              };
+            },
+          },
         },
       ],
       validation: (Rule) => Rule.required().min(1),
@@ -54,4 +67,18 @@ export const order = defineType({
     defineField({ name: "orderDate", type: "datetime", title: "Order Date", validation: (Rule) => Rule.required(), initialValue: () => new Date().toISOString() }),
     defineField({ name: "totalAmount", type: "number", title: "Total Amount", validation: (Rule) => Rule.required().min(0) }),
   ],
+  preview: {
+    select: {
+      customer: "customer.name",
+      status: "orderStatus",
+      amount: "totalAmount",
+    },
+    prepare(selection) {
+      const { customer, status, amount } = selection;
+      return {
+        title: customer || "Unknown Customer",
+        subtitle: `Status: ${status || "Unknown"} | Total: $${amount || 0}`,
+      };
+    },
+  },
 });
