@@ -74,7 +74,7 @@ export default function CheckOut() {
 
 
       const result = await res.json();
-      console.log("result saved succefully", result);
+      console.log("Data saved succefully", result);
     } catch (error) {
       console.error("Error sending order to sanity", error);
     }
